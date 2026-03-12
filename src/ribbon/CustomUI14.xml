@@ -31,6 +31,10 @@
                     label="Pay03 - Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+                <button id="btnHRPayroll_Pay13"
+                    label="Pay13 - Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
                 <button id="btnHRPayroll_Pay14"
                     label="Pay14 - Convert Report"
                     imageMso="TableInsert"
