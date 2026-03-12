@@ -188,3 +188,47 @@ Fail:
     TryParseNumber = False
 End Function
 
+' Heuristic: employee headers look like "LAST, FIRST (######) ####"
+' Must contain parens and a comma, and end in 4 digits (SSN suffix)
+Public Function IsEmployeeHeader(ByVal s As String) As Boolean
+    If InStr(1, s, "(", vbTextCompare) = 0 Then Exit Function
+    If InStr(1, s, ")", vbTextCompare) = 0 Then Exit Function
+    If InStr(1, s, ",", vbTextCompare) = 0 Then Exit Function
+
+    Dim t As String: t = Trim$(s)
+    If Len(t) < 4 Then Exit Function
+    IsEmployeeHeader = IsNumeric(Right$(t, 4))
+End Function
+
+Public Sub ParseEmployeeHeader(ByVal s As String, ByRef empName As String, ByRef empID As String, ByRef last4 As String)
+    empName = vbNullString
+    empID = vbNullString
+    last4 = vbNullString
+
+    Dim t As String: t = Trim$(s)
+
+    ' Format: "LAST, FIRST (######) ####"
+    ' Split at the opening paren: name is to the left, ID+SSN tail is from '(' onward
+    Dim p1 As Long
+    p1 = InStr(1, t, "(", vbTextCompare)
+
+    If p1 < 2 Then
+        Debug.Print "ParseEmployeeHeader: no '(' found in [" & t & "]"
+        empName = t
+        Exit Sub
+    End If
+
+    empName = Trim$(Left$(t, p1 - 1))
+
+    Dim tail As String
+    tail = Trim$(Mid$(t, p1))   ' "(######) ####"
+
+    Dim rawID As String, rawSSN As String
+    If TryParseIdSsn4(tail, rawID, rawSSN) Then
+        empID = rawID               ' already zero-padded to 6 digits by TryParseIdSsn4
+        last4 = MaskSsn4(rawSSN)   ' "XXX-XX-####"
+    Else
+        Debug.Print "ParseEmployeeHeader: TryParseIdSsn4 failed on tail [" & tail & "] from [" & t & "]"
+    End If
+End Sub
+
