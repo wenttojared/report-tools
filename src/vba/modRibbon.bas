@@ -14,6 +14,7 @@ Public Sub Ribbon_About(control As Object)
           "Version: " & ReportTools_Version() & vbCrLf & _
           "Build Date: " & ReportTools_Build() & vbCrLf & _
           "Author: " & ReportTools_Author() & vbCrLf & vbCrLf & _
+          "Copyright: " & ReportTools_Copyright() & vbCrLf & vbCrLf & _
           "Licensed under MIT License" & vbCrLf & _
           "Source: https://github.com/wenttojared/report-tools"
 
