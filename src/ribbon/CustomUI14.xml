@@ -1,0 +1,56 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_OnLoad">
+  <ribbon>
+    <tabs>
+      <tab id="tabReportTools" label="Report Tools">
+
+        <!-- FINANCE -->
+        <group id="grpFinance" label="Finance">
+          <menu id="mnuFinance" label="Finance Reports" imageMso="AccountingFormat">
+
+            <menu id="mnuFinBudget" label="Budget"/>
+            <menu id="mnuFinFiscal" label="Fiscal">
+                <button id="btnFinance_Fiscal05"
+                    label="Fiscal05 - Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+            </menu>
+          </menu>
+        </group>
+
+        <!-- HR/PAYROLL -->
+        <group id="grpHRPay" label="HR / Payroll">
+          <menu id="mnuHRPay" label="HR/Payroll Reports" imageMso="ContactPicture">
+            <menu id="mnuHRBenefits" label="Benefits">
+              <button id="btnHRPayroll_Ben02"
+                      label= "Ben02 - Convert Report"
+                      imageMso="TableInsert"
+                      onAction="Ribbon_Run" />
+            </menu>      
+            <menu id="mnuHRPayroll" label="Payroll">
+                <button id="btnHRPayroll_Pay03"
+                    label="Pay03 - Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+                <button id="btnHRPayroll_Pay14"
+                    label="Pay14 - Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+            </menu>
+            <menu id="mnuHRPositionControl" label="Position Control">
+                <button id="btnHRPayroll_Pos04"
+                    label="Pos04 - Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+            </menu>
+          </menu>
+        </group>
+
+        <!-- UTILITIES -->
+        <group id="grpTools" label="Utilities">
+          <button id="btnAbout" label="About / Version" imageMso="Info" onAction="Ribbon_About"/>
+        </group>
+
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>

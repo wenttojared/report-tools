@@ -1,0 +1,21 @@
+# Build output
+dist/
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+
+# Excel temp files
+~$*.xls*
+~$*.xlam
+~$*.xlsm
+
+# Windows
+Thumbs.db
+.DS_Store
+
+# VS Code
+.vs/
+.vscode/
