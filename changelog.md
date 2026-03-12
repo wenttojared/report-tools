@@ -2,6 +2,16 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.7.0] - 2026-03-12
+### Added
+- **repPay13** - New report module. Normalizes Pay13a Payroll Adjustments by Employee exports into a flat table with one row per code entry. Columns: `District, EmployeeName, EmployeeID, SSN_Last4, PayCycle, PayDate, T, Code, Description, Date, Position_Vendor_HRA, DeductionAmount, ContributionAmount, PayRate, Units, EarningsAmount, BudgetCode, RetirementSystem, PayPeriod, CC, PC, Wrk_Assgn, Rate, SourceSheet`. Handles D/C type entries (Line 1 only), earnings codes with no retirement system, optional budget code rows, and optional retirement system lines (PERS and STRS variants). District name backfilled via pre-scan block lookup; numeric summary and footnote rows skipped.
+- **modEntryPoints** - `Run_Pay13_WithPicker` entry point.
+- **CustomUI14.xml** - Pay13 button added to Payroll menu.
+### Changed
+- **modCoreMeta** - Version bumped to 0.7.0.
+- **modRT_Parse** - `IsEmployeeHeader` and `ParseEmployeeHeader` promoted from private to public. Previously duplicated in repPay14; now shared across all modules requiring employee header parsing.
+- **repPay14** - Private `IsEmployeeHeader` and `ParseEmployeeHeader` removed; replaced with calls to public versions in modRT_Parse.
+
 ## [0.6.0] - 2026-02-25
 ### Added
 - **repPos04** - New report module. Normalizes Pos04 position control exports into a flat table with one row per employee per budget code. Columns: `OrgID, BU, AssignType, Employee, EmployeeID, Location, JobCategory, JobClass, CalendarDays, Placement, Rate, StartDate, EndDate, FTE_Authorized, FTE_Assigned, BudgetCode, AccountPct, Amount, SourceSheet`. Handles multi-Org files, mid-year assignment splits (multiple header rows sharing one budget code block), multi-account salary distributions, and multi-district exports.

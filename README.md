@@ -1,7 +1,7 @@
 # ReportTools for Frontline CA ERP
 
 ![Status](https://img.shields.io/badge/status-active%20development-blue)
-![Version](https://img.shields.io/badge/version-0.6.0-informational)
+![Version](https://img.shields.io/badge/version-0.7.0-informational)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Excel-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -41,6 +41,7 @@ Each module targets a specific ERP export format and normalizes it into a flat, 
 | Module | Report | Output Description |
 |--------|--------|--------------------|
 | `Pay03` | Payroll Summary | Normalized payroll summary rows |
+| `Pay13` | Payroll Adjustments by Employee | One row per code entry per employee, with optional budget code and retirement system fields |
 | `Pay14` | Net Pay / Deductions | One row per employee per deduction/contribution item |
 | `Ben02` | Benefits | One row per employee per benefit provider and level |
 | `Pos04` | Position Control | One row per employee per budget code allocation |
