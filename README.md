@@ -1,7 +1,7 @@
 # ReportTools for Frontline CA ERP
 
 ![Status](https://img.shields.io/badge/status-active%20development-blue)
-![Version](https://img.shields.io/badge/version-0.7.0-informational)
+![Version](https://img.shields.io/badge/version-0.8.0-informational)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Excel-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -45,6 +45,7 @@ Each module targets a specific ERP export format and normalizes it into a flat, 
 | `Pay14` | Net Pay / Deductions | One row per employee per deduction/contribution item |
 | `Ben02` | Benefits | One row per employee per benefit provider and level |
 | `Pos04` | Position Control | One row per employee per budget code allocation |
+| `Budget04` | Budget Detail By Account | Import macro specifically for importing the next interim's budget |
 | `Fiscal05` | Fiscal Conversion | Normalized fiscal conversion report rows |
 
 Each module is accessible from the ReportTools ribbon tab via a workbook and sheet picker — no manual sheet wiring required.

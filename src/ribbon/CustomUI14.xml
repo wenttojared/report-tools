@@ -6,8 +6,12 @@
         <!-- FINANCE -->
         <group id="grpFinance" label="Finance">
           <menu id="mnuFinance" label="Finance Reports" imageMso="AccountingFormat">
-
-            <menu id="mnuFinBudget" label="Budget"/>
+            <menu id="mnuFinBudget" label="Budget">
+                <button id="btnFinance_Budget04Import"
+                    label="Budget04 - Prepare Import"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+            </menu>            
             <menu id="mnuFinFiscal" label="Fiscal">
                 <button id="btnFinance_Fiscal05"
                     label="Fiscal05 - Convert Report"

@@ -2,6 +2,18 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.8.0] - 2026-04-27
+### Added
+- **repBudget04** - New report module. Produces a headerless three-column budget import
+  table (`District, BudgetCode, Amount`) from Budget04 exports. Excludes salary and
+  benefits lines (Object 1000–3999) where Sub-Object is `00`. District is backfilled
+  via pre-scan block lookup on `"Total for Org NNN"` trailer rows using `TryParseOrg3`.
+  Output sheet: `Budget04_Import`.
+- **modEntryPoints** - `Run_Budget04Import_WithPicker` entry point.
+- **CustomUI14.xml** - Budget04 import button added to Budget menu (`mnuFinBudget`).
+### Changed
+- **modCoreMeta** - Version bumped to 0.8.0.
+
 ## [0.7.0] - 2026-03-12
 ### Added
 - **repPay13** - New report module. Normalizes Pay13a Payroll Adjustments by Employee exports into a flat table with one row per code entry. Columns: `District, EmployeeName, EmployeeID, SSN_Last4, PayCycle, PayDate, T, Code, Description, Date, Position_Vendor_HRA, DeductionAmount, ContributionAmount, PayRate, Units, EarningsAmount, BudgetCode, RetirementSystem, PayPeriod, CC, PC, Wrk_Assgn, Rate, SourceSheet`. Handles D/C type entries (Line 1 only), earnings codes with no retirement system, optional budget code rows, and optional retirement system lines (PERS and STRS variants). District name backfilled via pre-scan block lookup; numeric summary and footnote rows skipped.
