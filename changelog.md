@@ -2,6 +2,15 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.8.1] - 2026-04-29
+### Added
+- **CustomUI14.xml** - Export Settings button added to Utilities group. Displays a global message explaining that all macros require the "Excel Data" export format from Frontline CA ERP, and that report-specific guidance (where applicable) is available in each report's submenu.
+- **modRibbon** - `Ribbon_ExportSettings` callback for the Export Settings button.
+- **modRibbon** - `Ribbon_Guide` callback and private `GetGuideText` dispatch function. Reads the report code from the control ID (`btnGuide_ReportCode`) and displays a report-specific export guide message. Budget04 Import Settings guide text added.
+### Changed
+- **CustomUI14.xml** - All report buttons promoted from flat `<button>` entries to per-report `<menu>` submenus. Each report now has its own named submenu containing its macro(s) and, where applicable, an Export Guide entry. Scales cleanly to multiple macros per report. Existing button IDs and `onAction` targets are unchanged. Combined `Finance` and `HR/Payroll` into a single `Macros` section for cleaner UI.
+- **modCoreMeta** - Version bumped to 0.8.1.
+
 ## [0.8.0] - 2026-04-27
 ### Added
 - **repBudget04** - New report module. Produces a headerless three-column budget import

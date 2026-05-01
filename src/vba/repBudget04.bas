@@ -51,13 +51,7 @@ Private Sub Budget04_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbook)
     Dim psBlockStart As Long: psBlockStart = 1
     Dim psR As Long
     For psR = 1 To nRows
-    ' TROUBLESHOOTING NOTE:
-    ' The original report I built this for had "Total for Org 000 - District Name"
-    ' in col A but the one I received from Business that they're running this macro
-    ' for has it in col C. If OrgId suddently stops working check this part and adjust 
-    ' the column index as needed. 
-    ' e.g. if it's in col A then change data(psR, 3) to data(psR, 1) and test.
-        Dim psAV As Variant: psAV = data(psR, 3) 
+        Dim psAV As Variant: psAV = data(psR, 4) 
         If Not IsEmpty(psAV) Then
             If VarType(psAV) = vbString Then
                 Dim psText As String: psText = Trim$(CStr(psAV))

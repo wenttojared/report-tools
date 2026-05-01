@@ -3,58 +3,82 @@
     <tabs>
       <tab id="tabReportTools" label="Report Tools">
 
-        <!-- FINANCE -->
-        <group id="grpFinance" label="Finance">
+        <group id="grpMacros" label="Macros">
+          <!-- FINANCE -->
           <menu id="mnuFinance" label="Finance Reports" imageMso="AccountingFormat">
+            <!-- BUDGET-->
             <menu id="mnuFinBudget" label="Budget">
+              <menu id="mnuFinBudget_Budget04" label="Budget04" imageMso="TableInsert">
                 <button id="btnFinance_Budget04Import"
-                    label="Budget04 - Prepare Import"
+                    label="Prepare Import"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
-            </menu>            
+                <menuSeparator id="sepFinBudget04" />
+                <button id="btnGuide_Budget04Import"
+                    label="Prepare Import Settings"
+                    imageMso="Info"
+                    onAction="Ribbon_Guide" />
+              </menu>
+            </menu>
+            <!-- FISCAL -->
             <menu id="mnuFinFiscal" label="Fiscal">
+              <menu id="mnuFinFiscal_Fiscal05" label="Fiscal05" imageMso="TableInsert">
                 <button id="btnFinance_Fiscal05"
-                    label="Fiscal05 - Convert Report"
+                    label="Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+              </menu>
             </menu>
-          </menu>
-        </group>
 
-        <!-- HR/PAYROLL -->
-        <group id="grpHRPay" label="HR / Payroll">
-          <menu id="mnuHRPay" label="HR/Payroll Reports" imageMso="ContactPicture">
+          </menu>
+          <!-- HR/PAYROLL -->
+          <menu id="mnuHRPay" label="HR/Payroll Reports" imageMso="ContactPictureMenu">
+            <!-- BENEFITS -->
             <menu id="mnuHRBenefits" label="Benefits">
-              <button id="btnHRPayroll_Ben02"
-                      label= "Ben02 - Convert Report"
-                      imageMso="TableInsert"
-                      onAction="Ribbon_Run" />
-            </menu>      
+              <menu id="mnuHRBenefits_Ben02" label="Ben02" imageMso="TableInsert">
+                <button id="btnHRPayroll_Ben02"
+                    label="Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+              </menu>
+            </menu>
+            <!-- PAYROLL -->
             <menu id="mnuHRPayroll" label="Payroll">
+              <menu id="mnuHRPayroll_Pay03" label="Pay03" imageMso="TableInsert">
                 <button id="btnHRPayroll_Pay03"
-                    label="Pay03 - Convert Report"
+                    label="Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+              </menu>
+              <menu id="mnuHRPayroll_Pay13" label="Pay13" imageMso="TableInsert">
                 <button id="btnHRPayroll_Pay13"
-                    label="Pay13 - Convert Report"
+                    label="Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+              </menu>
+              <menu id="mnuHRPayroll_Pay14" label="Pay14" imageMso="TableInsert">
                 <button id="btnHRPayroll_Pay14"
-                    label="Pay14 - Convert Report"
+                    label="Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+              </menu>
             </menu>
+            <!-- POSITION CONTROL -->
             <menu id="mnuHRPositionControl" label="Position Control">
+              <menu id="mnuHRPositionControl_Pos04" label="Pos04" imageMso="TableInsert">
                 <button id="btnHRPayroll_Pos04"
-                    label="Pos04 - Convert Report"
+                    label="Convert Report"
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
+              </menu>
             </menu>
+
           </menu>
         </group>
 
         <!-- UTILITIES -->
         <group id="grpTools" label="Utilities">
+          <button id="btnExportSettings" label="Export Settings" imageMso="AutoFormatDialog" onAction="Ribbon_ExportSettings"/>
           <button id="btnAbout" label="About / Version" imageMso="Info" onAction="Ribbon_About"/>
         </group>
 
