@@ -30,6 +30,8 @@ Public Sub Ribbon_ExportSettings(ByVal control As Object)
           "These macros are designed to work with reports exported using the " & _
           """Excel Data"" option in Frontline CA ERP. Other export formats " & _
           "(PDF, CSV, etc.) are not supported and will produce unexpected results." & vbCrLf & vbCrLf & _
+          "Additionally, these exports out of ERP will need to be saved as .xlsx or .xlsm files and reopened for this tool to appear in your ribbon. " & _
+          "This tool is not compatible with the legacy .xls format that ERP defaults to." & vbCrLf & vbCrLf & _
           "Some reports require specific settings to be configured before running. " & _
           "Where this applies, an Export Guide will appear in the report's submenu." & vbCrLf & vbCrLf & _
           "If no Export Guide is listed for a report, it is designed to work with " & _

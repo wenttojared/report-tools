@@ -9,6 +9,10 @@
             <!-- BUDGET-->
             <menu id="mnuFinBudget" label="Budget">
               <menu id="mnuFinBudget_Budget04" label="Budget04" imageMso="TableInsert">
+                <button id="btnFinance_Budget04Convert"
+                    label="Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
                 <button id="btnFinance_Budget04Import"
                     label="Prepare Import"
                     imageMso="TableInsert"

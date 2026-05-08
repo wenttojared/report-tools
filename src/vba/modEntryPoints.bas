@@ -117,3 +117,18 @@ Fail:
     RT_HandleError "Budget04", wb, ws
 End Sub
 
+Public Sub Run_Budget04Convert_WithPicker()
+    Dim wb As Workbook, ws As Worksheet
+    Set wb = PickWorkbook("Pick the workbook that contains the Budget04 export:")
+    If wb Is Nothing Then Exit Sub
+
+    Set ws = PickWorksheet(wb, "Pick the sheet that contains the Budget04 export:")
+    If ws Is Nothing Then Exit Sub
+
+    On Error GoTo Fail
+    Budget04_Convert ws
+    Exit Sub
+
+Fail:
+    RT_HandleError "Budget04", wb, ws
+End Sub
