@@ -18,6 +18,21 @@ Public Sub Run_Pay03_WithPicker()
 Fail:
     RT_HandleError "Pay03", wb, ws
 End Sub
+Public Sub Run_Pay07_WithPicker()
+    Dim wb As Workbook, ws As Worksheet
+    Set wb = PickWorkbook("Pick the workbook that contains the Pay07 export:")
+    If wb Is Nothing Then Exit Sub
+
+    Set ws = PickWorksheet(wb, "Pick the sheet that contains the Pay07 export:")
+    If ws Is Nothing Then Exit Sub
+
+    On Error GoTo Fail
+    Pay07 ws
+    Exit Sub
+    
+Fail:
+    RT_HandleError "Pay07", wb, ws
+End Sub
 Public Sub Run_Pay13_WithPicker()
     Dim wb As Workbook, ws As Worksheet
     Set wb = PickWorkbook("Pick the workbook that contains the Pay13 export:")

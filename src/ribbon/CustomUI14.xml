@@ -54,6 +54,12 @@
                     imageMso="TableInsert"
                     onAction="Ribbon_Run" />
               </menu>
+              <menu id="mnuHRPayroll_Pay07" label="Pay07" imageMso="TableInsert">
+                <button id="btnHRPayroll_Pay07"
+                    label="Convert Report"
+                    imageMso="TableInsert"
+                    onAction="Ribbon_Run" />
+              </menu>
               <menu id="mnuHRPayroll_Pay13" label="Pay13" imageMso="TableInsert">
                 <button id="btnHRPayroll_Pay13"
                     label="Convert Report"

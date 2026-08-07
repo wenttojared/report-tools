@@ -149,6 +149,46 @@ Public Function TryParseVendor(ByVal v As Variant, ByRef vendorID As String, ByR
     TryParseVendor = True
 End Function
 
+' Expected format: "NNNNNN/N"  ->  6-digit VendorID, unpadded VendorAddr suffix.
+' Distinct from TryParseVendor: no enclosing parens, no trailing VendorType
+' label, and the address segment is NOT zero-padded to a fixed width (observed
+' as 1+ digits in Pay07 trailing-warrant exports, e.g. "006291/1").
+Public Function TryParseVendorSlash(ByVal v As Variant, ByRef vendorID As String, ByRef vendorAddr As String) As Boolean
+    vendorID = vbNullString
+    vendorAddr = vbNullString
+
+    Dim t As String
+    t = Trim$(CStr(v))
+
+    If Len(t) = 0 Then Exit Function
+
+    Dim p As Long
+    p = InStr(1, t, "/")
+    If p <> 7 Then   ' 6-digit ID must be immediately followed by "/"
+        Debug.Print "TryParseVendorSlash: '/' not at position 7 [" & t & "]"
+        Exit Function
+    End If
+
+    Dim idPart As String
+    idPart = Left$(t, 6)
+    If Not IsNumeric(idPart) Then
+        Debug.Print "TryParseVendorSlash: vendor ID portion not numeric [" & idPart & "] in [" & t & "]"
+        Exit Function
+    End If
+
+    Dim addrPart As String
+    addrPart = Mid$(t, p + 1)
+    If Len(addrPart) = 0 Or Not IsNumeric(addrPart) Then
+        Debug.Print "TryParseVendorSlash: vendor address portion not numeric [" & addrPart & "] in [" & t & "]"
+        Exit Function
+    End If
+
+    vendorID = idPart
+    vendorAddr = addrPart
+
+    TryParseVendorSlash = True
+End Function
+
 ' Handles numeric strings, currency formatting, parenthetical negatives, and non-breaking spaces
 Public Function TryParseNumber(ByVal v As Variant, ByRef outNum As Double) As Boolean
     On Error GoTo Fail
@@ -231,4 +271,3 @@ Public Sub ParseEmployeeHeader(ByVal s As String, ByRef empName As String, ByRef
         Debug.Print "ParseEmployeeHeader: TryParseIdSsn4 failed on tail [" & tail & "] from [" & t & "]"
     End If
 End Sub
-
