@@ -41,6 +41,7 @@ Each module targets a specific ERP export format and normalizes it into a flat, 
 | Module | Report | Output Description |
 |--------|--------|--------------------|
 | `Pay03` | Payroll Summary | Normalized payroll summary rows |
+| `Pay07` | Warrant/ACH Register | Splits into three sheets — Physical Warrants, Trailing (vendor) Warrants, and ACH — one row per payment |
 | `Pay13` | Payroll Adjustments by Employee | One row per code entry per employee, with optional budget code and retirement system fields |
 | `Pay14` | Net Pay / Deductions | One row per employee per deduction/contribution item |
 | `Ben02` | Benefits | One row per employee per benefit provider and level |

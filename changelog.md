@@ -2,6 +2,15 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.10.0] - 2026-08-07
+### Added
+- **repPay07** - New report module. Splits Pay07 warrant/ACH exports into three normalized sheets instead of one: `Pay07_Physical`, `Pay07_Trailing`, `Pay07_ACH`. Columns: `OrgID, CheckDate, EmployeeID/VendorID, SSN_Last4/VendorAddrNum, EmployeeName/VendorName, Amount, WarrantNumber/ACHNumber, SourceSheet`. Row type is resolved from the warrant prefix in column B (`"ACH-"` vs numeric starting with `1`) and, for physical warrants, from the payee format in column D (employee `(NNNNNN) NNNN` vs vendor `NNNNNN/N`) to split standard physical warrants from trailing vendor warrants. Source report has no header row; data rows are distinguished from subtotal/footer rows by column A being a date serial rather than text. OrgID is backfilled per block using a new ordinal-match pattern against the footer's `"Org"` rows (position-based, not row-range-based like the district lookups in Pos04/Pay13/Budget04) since the footer carries the Org ID but not the district name or any row-range info.
+- **modRT_Parse** - New public function `TryParseVendorSlash`. Parses trailing-warrant vendor cells of the form `NNNNNN/N` (6-digit vendor ID, unpadded address suffix) — distinct from `TryParseVendor`, which expects the parenthesized `(NNNNNN/NNN) VendorType` format.
+- **modEntryPoints** - `Run_Pay07_WithPicker` entry point.
+- **CustomUI14.xml** - Pay07 button added to Payroll menu, alongside Pay03/Pay13/Pay14.
+### Changed
+- **modCoreMeta** - Version bumped to 0.10.0.
+
 ## [0.8.1] - 2026-04-29
 ### Added
 - **CustomUI14.xml** - Export Settings button added to Utilities group. Displays a global message explaining that all macros require the "Excel Data" export format from Frontline CA ERP, and that report-specific guidance (where applicable) is available in each report's submenu.
