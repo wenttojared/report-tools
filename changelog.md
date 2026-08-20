@@ -2,6 +2,16 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.10.1] - 2026-08-20
+### Added
+- **repPay14** - New output sheet `Pay14_Retirement`, produced by the same macro run. Extracts the earnings/assignment detail section that precedes the Deduction/Contribution section in each employee block (EmployeeID, SSN_Last4, EmployeeName, Effective, Source, EarningsDescription, RetirePlan, ObjectCode, AssnWork, PC, CC, Units, RetBase, RetEarn, Earnings, Adjustment, SourceSheet), one row per earnings line. Budget-code allocation sub-rows beneath an earnings line (same split pattern as repPos04) are excluded as standalone rows by design; instead, the highest-percentage account line immediately following each earnings row is used to attribute an `ObjectCode` (Object segment of the account string), letting Accounting audit whether an assignment's Retire Plan (STRSN/PERSN) matches its funding account's object code range (1000-1999 Certificated, 2000-2999 Classified). Of the two source columns both labeled "Pay Rate," only the second (col L) is carried through, as `RetBase`.
+### Changed
+- **repPay14** - `Pay14_Worker` refactored to accept the source data array from the `Pay14` entry sub instead of reading the worksheet itself, so `Pay14_Retirement_Worker` can share the same read.
+- **modRT_Parse** - New public function `IsAccountCodeCell`, consolidating three near-identical private "two digits + dash" account-code checks previously duplicated in `repPos04`, `repBudget04`, and `repPay13`.
+- **modRT_Parse** - `TryParseDistrictID` promoted from private in `repPos04` to public, widened to accept a Variant (matching `TryParseOrg3`/`TryParseVendor`/`TryParseVendorSlash`). No current second consumer; promoted for reuse by future report modules, same rationale as `TryParseVendorSlash`.
+### Fixed
+- **modEntryPoints** - `Run_Budget04Import_WithPicker` called a non-existent sub (`Budget04`); now correctly calls `Budget04_Import`.
+
 ## [0.10.0] - 2026-08-07
 ### Added
 - **repPay07** - New report module. Splits Pay07 warrant/ACH exports into three normalized sheets instead of one: `Pay07_Physical`, `Pay07_Trailing`, `Pay07_ACH`. Columns: `OrgID, CheckDate, EmployeeID/VendorID, SSN_Last4/VendorAddrNum, EmployeeName/VendorName, Amount, WarrantNumber/ACHNumber, SourceSheet`. Row type is resolved from the warrant prefix in column B (`"ACH-"` vs numeric starting with `1`) and, for physical warrants, from the payee format in column D (employee `(NNNNNN) NNNN` vs vendor `NNNNNN/N`) to split standard physical warrants from trailing vendor warrants. Source report has no header row; data rows are distinguished from subtotal/footer rows by column A being a date serial rather than text. OrgID is backfilled per block using a new ordinal-match pattern against the footer's `"Org"` rows (position-based, not row-range-based like the district lookups in Pos04/Pay13/Budget04) since the footer carries the Org ID but not the district name or any row-range info.

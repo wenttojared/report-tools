@@ -1,7 +1,7 @@
 # ReportTools for Frontline CA ERP
 
 ![Status](https://img.shields.io/badge/status-active%20development-blue)
-![Version](https://img.shields.io/badge/version-0.10.0-informational)
+![Version](https://img.shields.io/badge/version-0.10.1-informational)
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Excel-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -43,7 +43,7 @@ Each module targets a specific ERP export format and normalizes it into a flat, 
 | `Pay03` | Payroll Summary | Normalized payroll summary rows |
 | `Pay07` | Warrant/ACH Register | Splits into three sheets — Physical Warrants, Trailing (vendor) Warrants, and ACH — one row per payment |
 | `Pay13` | Payroll Adjustments by Employee | One row per code entry per employee, with optional budget code and retirement system fields |
-| `Pay14` | Net Pay / Deductions | One row per employee per deduction/contribution item |
+| `Pay14` | Net Pay / Deductions / Retirement | One row per employee per deduction/contribution item. Second sheet of retirment data with one row per employee pay source |
 | `Ben02` | Benefits | One row per employee per benefit provider and level |
 | `Pos04` | Position Control | One row per employee per budget code allocation |
 | `Budget04` | Budget Detail By Account | Import macro specifically for importing the next interim's budget |
