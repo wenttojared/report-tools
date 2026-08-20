@@ -128,7 +128,7 @@ Private Sub Budget04_Convert_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbo
             Dim aText As String: aText = Trim$(CStr(aV))
             If Len(aText) = 0 Then GoTo NextRow
 
-            If IsBudgetCodeRow(aText) Then
+            If IsAccountCodeCell(aText) Then
                 curAccountCode = aText
                 curAccountDesc = Trim$(CStr(NzV(data(r, 2))))
             End If
@@ -265,7 +265,7 @@ Private Sub Budget04_Import_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workboo
 
         Dim aText As String: aText = Trim$(CStr(aV))
         If Len(aText) = 0 Then GoTo NextRow
-        If Not IsBudgetCodeRow(aText) Then GoTo NextRow
+        If Not IsAccountCodeCell(aText) Then GoTo NextRow
 
         If nCols < 3 Then GoTo NextRow
         Dim amtV As Variant: amtV = data(r, 3)
@@ -305,15 +305,6 @@ End Sub
 ' ============================================================
 ' SHARED PRIVATE HELPERS
 ' ============================================================
-
-' Returns True if the string is a Frontline budget code row.
-' Budget codes start with two digits followed by a dash: "01-...", "12-..."
-Private Function IsBudgetCodeRow(ByVal s As String) As Boolean
-    If Len(s) < 3 Then Exit Function
-    If Not (Mid$(s, 1, 1) Like "#") Then Exit Function
-    If Not (Mid$(s, 2, 1) Like "#") Then Exit Function
-    IsBudgetCodeRow = (Mid$(s, 3, 1) = "-")
-End Function
 
 ' Given a row number, returns the district ID whose pre-scanned block
 ' contains that row. Returns empty string if no block covers the row.

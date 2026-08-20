@@ -357,19 +357,6 @@ Private Function IsTypeFlagCell(ByVal s As String) As Boolean
     IsTypeFlagCell = True
 End Function
 
-' Returns True if the cell value looks like an account/budget code.
-' Budget codes start with two digits followed by a dash: "01-...", "13-..."
-' Mirrors the IsAccountCode function in repPos04.
-Private Function IsAccountCodeCell(ByVal v As Variant) As Boolean
-    If IsEmpty(v) Then Exit Function
-    If VarType(v) <> vbString Then Exit Function
-    Dim s As String: s = Trim$(CStr(v))
-    If Len(s) < 3 Then Exit Function
-    If Not (Mid$(s, 1, 1) Like "#") Then Exit Function
-    If Not (Mid$(s, 2, 1) Like "#") Then Exit Function
-    IsAccountCodeCell = (Mid$(s, 3, 1) = "-")
-End Function
-
 ' Returns True if the cell value is a retirement system code.
 ' These start with PERS or STRS (case-insensitive).
 Private Function IsRetirementCell(ByVal v As Variant) As Boolean

@@ -208,7 +208,7 @@ Private Sub Pos04_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbook)
             ' Confirm col D is NOT a budget code (budget codes contain "-" early)
             Dim dText As String: dText = vbNullString
             If Not IsEmpty(dV) Then dText = Trim$(CStr(dV))
-            If Not IsAccountCode(dText) Then
+            If Not IsAccountCodeCell(dText) Then
                 isEmpHeader = True
             End If
         End If
@@ -285,7 +285,7 @@ Private Sub Pos04_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbook)
             Dim eText2 As String: eText2 = vbNullString
             If Not IsEmpty(eV) Then eText2 = Trim$(CStr(eV))
 
-            If IsAccountCode(dText2) And InStr(1, eText2, "%") > 0 Then
+            If IsAccountCodeCell(dText2) And InStr(1, eText2, "%") > 0 Then
 
                 Dim acctPct As Double
                 acctPct = ParseAccountPct(eText2)
@@ -396,11 +396,11 @@ End Sub
 
 ' Returns True if the string looks like a budget/account code.
 ' Account codes start with two digits followed by a dash, e.g. "01-..." or "13-..."
-Private Function IsAccountCode(ByVal s As String) As Boolean
+Private Function IsAccountCodeCell(ByVal s As String) As Boolean
     If Len(s) < 3 Then Exit Function
     If Not (Mid$(s, 1, 1) Like "#") Then Exit Function
     If Not (Mid$(s, 2, 1) Like "#") Then Exit Function
-    IsAccountCode = (Mid$(s, 3, 1) = "-")
+    IsAccountCodeCell = (Mid$(s, 3, 1) = "-")
 End Function
 
 ' Extract BU code (3-4 uppercase letters) from a line like
@@ -493,42 +493,6 @@ Private Function TryParseDateRange(ByVal s As String, ByRef startDt As Date, ByR
 
 ParseFail:
     On Error GoTo 0
-End Function
-
-' Parse a district/org ID from Pos04 total rows.
-' Handles the pattern "Totals for 005 - District Name" where the ID is a
-' numeric code immediately following "Totals for ".
-' This is distinct from TryParseOrg3 (which requires the word "Org" in the string)
-' and may be promoted to modRT_Parse if other reports share this pattern.
-' Returns True and sets distID to the leading numeric token if found.
-Private Function TryParseDistrictID(ByVal s As String, ByRef distID As String) As Boolean
-    TryParseDistrictID = False
-    distID = vbNullString
-
-    ' Must start with "Totals for "
-    Const PREFIX As String = "Totals for "
-    If Left$(s, Len(PREFIX)) <> PREFIX Then Exit Function
-
-    ' Token immediately after prefix
-    Dim t As String
-    t = Trim$(Mid$(s, Len(PREFIX) + 1))
-
-    ' Extract the leading numeric token (stop at first non-digit)
-    Dim i As Long, digits As String
-    digits = vbNullString
-    For i = 1 To Len(t)
-        Dim ch As String: ch = Mid$(t, i, 1)
-        If ch Like "#" Then
-            digits = digits & ch
-        Else
-            Exit For
-        End If
-    Next i
-
-    If Len(digits) = 0 Then Exit Function   ' no leading digits -> BU total, not district total
-
-    distID = digits
-    TryParseDistrictID = True
 End Function
 
 ' Given a row number, return the district ID whose block contains that row.

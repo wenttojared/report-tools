@@ -1,6 +1,73 @@
 Attribute VB_Name = "modRT_Parse"
 Option Explicit
 
+' Returns True if the cell value looks like a Frontline account/budget code:
+' two digits followed by a dash, e.g. "01-0420-0-3500-2110-1319-00-531-212-101".
+' Accepts a raw cell Variant -- non-string and empty values are rejected before
+' the pattern check runs, so it's safe to call directly on GetA() results.
+Public Function IsAccountCodeCell(ByVal v As Variant) As Boolean
+    If IsEmpty(v) Then Exit Function
+    If VarType(v) <> vbString Then Exit Function
+
+    Dim s As String
+    s = Trim$(CStr(v))
+
+    If Len(s) < 3 Then Exit Function
+    If Not (Mid$(s, 1, 1) Like "#") Then Exit Function
+    If Not (Mid$(s, 2, 1) Like "#") Then Exit Function
+
+    IsAccountCodeCell = (Mid$(s, 3, 1) = "-")
+End Function
+
+' Parse a district/org ID from "Totals for NNN - District Name" trailer rows
+' (originally used only by repPos04; promoted here since it's a general-purpose
+' trailer-row parser, not because of any current duplicate).
+'
+' Distinct from TryParseOrg3: TryParseOrg3 requires the word "Org" somewhere in
+' the string and always returns exactly 3 digits scanned from the back.
+' TryParseDistrictID requires an exact leading "Totals for " prefix and returns
+' whatever leading digit-run follows it (any length), scanned from the front.
+' The two are not interchangeable -- a row that matches one will not generally
+' match the other.
+'
+' Returns True and sets distID to the leading numeric token if found. Returns
+' False (with distID left blank) for non-matching rows, including "Totals for "
+' rows with no leading digits (e.g. a Bargaining Unit total rather than a
+' district total).
+Public Function TryParseDistrictID(ByVal v As Variant, ByRef distID As String) As Boolean
+    TryParseDistrictID = False
+    distID = vbNullString
+
+    Dim s As String
+    s = Trim$(CStr(v))
+    If Len(s) = 0 Then Exit Function
+
+    ' Must start with "Totals for "
+    Const PREFIX As String = "Totals for "
+    If Left$(s, Len(PREFIX)) <> PREFIX Then Exit Function
+
+    ' Token immediately after prefix
+    Dim t As String
+    t = Trim$(Mid$(s, Len(PREFIX) + 1))
+
+    ' Extract the leading numeric token (stop at first non-digit)
+    Dim i As Long, digits As String
+    digits = vbNullString
+    For i = 1 To Len(t)
+        Dim ch As String: ch = Mid$(t, i, 1)
+        If ch Like "#" Then
+            digits = digits & ch
+        Else
+            Exit For
+        End If
+    Next i
+
+    If Len(digits) = 0 Then Exit Function   ' no leading digits -> BU total, not district total
+
+    distID = digits
+    TryParseDistrictID = True
+End Function
+
 ' Expected format: "(######) ####"  ->  6-digit ID inside parens, space, 4-digit SSN suffix
 Public Function TryParseIdSsn4(ByVal v As Variant, ByRef empId6 As String, ByRef ssn4 As String) As Boolean
     Dim t As String
