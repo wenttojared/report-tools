@@ -125,7 +125,7 @@ Public Sub Run_Budget04Import_WithPicker()
     If ws Is Nothing Then Exit Sub
 
     On Error GoTo Fail
-    Budget04 ws
+    Budget04_Import ws
     Exit Sub
 
 Fail:
