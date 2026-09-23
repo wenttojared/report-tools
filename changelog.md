@@ -2,6 +2,10 @@
 
 All notable changes to ReportTools will be documented here. Versioning follows [Semantic Versioning](https://semver.org/): `MAJOR.MINOR.PATCH`
 
+## [0.10.2] - 2026-09-23
+### Fixed
+- **repPay14**  - both Pay14_Worker and Pay14_Retirement_Worker used outCap = 5000 as an arbitrary initial output-buffer size, growing it via ReDim Preserve on large files. ReDim Preserve can only resize the last dimension of a multi-dimensional array; these arrays are declared (rows, cols), so growing the row count is not legal and threw "Invalid procedure call or argument" once outCount exceeded 5000 on a real-scale export. Changed outCap to nRows in both workers -- a provable upper bound, since each output row corresponds to exactly one distinct source row -- making the growth path unreachable.
+
 ## [0.10.1] - 2026-08-20
 ### Added
 - **repPay14** - New output sheet `Pay14_Retirement`, produced by the same macro run. Extracts the earnings/assignment detail section that precedes the Deduction/Contribution section in each employee block (EmployeeID, SSN_Last4, EmployeeName, Effective, Source, EarningsDescription, RetirePlan, ObjectCode, AssnWork, PC, CC, Units, RetBase, RetEarn, Earnings, Adjustment, SourceSheet), one row per earnings line. Budget-code allocation sub-rows beneath an earnings line (same split pattern as repPos04) are excluded as standalone rows by design; instead, the highest-percentage account line immediately following each earnings row is used to attribute an `ObjectCode` (Object segment of the account string), letting Accounting audit whether an assignment's Retire Plan (STRSN/PERSN) matches its funding account's object code range (1000-1999 Certificated, 2000-2999 Classified). Of the two source columns both labeled "Pay Rate," only the second (col L) is carried through, as `RetBase`.

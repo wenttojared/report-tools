@@ -1,7 +1,7 @@
 Attribute VB_Name = "modCoreMeta"
 Option Explicit
-Private Const ADDIN_VERSION As String = "0.10.1"
-Private Const ADDIN_BUILD_DATE As String = "2026-08-20"
+Private Const ADDIN_VERSION As String = "0.10.2"
+Private Const ADDIN_BUILD_DATE As String = "2026-09-23"
 Private Const ADDIN_AUTHOR As String = "Jared Rippey"
 Private Const ADDIN_COPYRIGHT As String = "Copyright (c) 2026 Jared Rippey"
 
