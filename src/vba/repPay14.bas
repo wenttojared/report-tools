@@ -65,7 +65,9 @@ Private Sub Pay14_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbook, ByRef d
     ' Output buffer -- grown in 5000-row chunks if needed
     Dim out() As Variant
     Dim outCount As Long, outCap As Long
-    outCap = 5000
+    ' nRows is a provable upper bound: each output row corresponds to exactly
+    ' one distinct source row (rr), so outCount can never exceed nRows. 
+    outCap = nRows
     ReDim out(1 To outCap, 1 To 15)
     outCount = 0
 
@@ -200,7 +202,7 @@ ContinueMain:
 End Sub
 
 ' ============================================================
-' RETIREMENT / EARNINGS WORKER 
+' RETIREMENT / EARNINGS WORKER (new)
 ' ============================================================
 ' Produces one output row per earnings detail line from the "Effective /
 ' Source / Earnings Description / ... " section that precedes the
@@ -209,10 +211,10 @@ End Sub
 ' Budget-code allocation sub-rows that can appear beneath an earnings line
 ' (same one-to-many split pattern as repPos04, e.g. a 70/30 split across two
 ' account codes) are intentionally excluded -- this sheet is one row per
-' earning only.
+' earning only, per spec.
 '
 ' Two source columns are both labeled "Pay Rate" (col E and col L). Col E is
-' dropped; col L is carried through as "RetBase".
+' dropped; col L is carried through as "RetBase" per spec.
 Private Sub Pay14_Retirement_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbook, ByRef data As Variant, ByVal nRows As Long, ByVal nCols As Long)
 
     Dim wsOut As Worksheet
@@ -240,7 +242,7 @@ Private Sub Pay14_Retirement_Worker(ByVal wsSrc As Worksheet, ByVal wb As Workbo
 
     Dim out() As Variant
     Dim outCount As Long, outCap As Long
-    outCap = 5000
+    outCap = nRows
     ReDim out(1 To outCap, 1 To 17)
     outCount = 0
 
