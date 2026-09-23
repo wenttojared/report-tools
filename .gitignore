@@ -19,3 +19,6 @@ Thumbs.db
 # VS Code
 .vs/
 .vscode/
+
+# com
+com-shim/
